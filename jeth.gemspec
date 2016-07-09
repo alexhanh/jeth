@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["alexander.hanhikoski@gmail.com"]
 
   spec.summary       = "Simple Ethereum JSON RPC client."
-  spec.description   = "IPC/HTTP and JSON RPC 2.0 supported."
+  spec.description   = "Simple Ethereum JSON RPC client. Supports IPC/HTTP and JSON RPC 2.0."
   spec.homepage      = "https://github.com/alexhanh/jeth"
   spec.license       = "MIT"
 
