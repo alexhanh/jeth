@@ -16,16 +16,27 @@ Start your Ethereum node with the desired endpoints (IPC, HTTP and/or WS). For e
 
 ```ruby
 client = Jeth.create
+client = Jeth::IpcClient.create
+client = Jeth::HttpClient.create('http://foo.bar:8545')
+
 client.eth_gas_price
  => {"jsonrpc"=>"2.0", "id"=>1, "result"=>"0x4a817c800"} 
 ```
 
 `Jeth.create(host_or_ipcpath)` automatically detects if you want HTTP or IPC and will initiate the appropriate client. It will default to IPC if nothing is specified. You can also use protocol clients explicitly:
 
+### Batching
+
 ```ruby
-Jeth::IpcClient.create
-Jeth::HttpClient.create('http://foo.bar:8545')
+client.batch do
+  client.eth_get_balance('0x407d73d8a49eeb85d32cf465507dd71d507100c1', 'latest')
+  client.eth_get_balance('0x407d73d8a49eeb85d32cf465507dd71d507100c1', 'pending')
+end
+
+ => [{"jsonrpc"=>"2.0", "id"=>1, "result"=>"0x0"}, {"jsonrpc"=>"2.0", "id"=>2, "result"=>"0x0"}]
 ```
+
+The response array is guaranteed to hold the responses in the same order as their corresponding requests were called.
 
 ## Methods
 
@@ -37,7 +48,7 @@ Jeth will automagically encode integer parameters as hex. That is `client.eth_ge
 
 You are free to use hex encoded parameters too `client.eth_get_block_by_number('0x0', false)`.
 
-Note that Jeth won't prefix with '0x' if hex parameters is missing it. However, at least Geth seems to tolerate unprefixed hex parameters.
+Note that Jeth won't prefix with '0x' if the user supplied hex encoded parameter is missing the prefix. However, at least Geth seems to tolerate unprefixed hex parameters.
 
 ## Development
 
