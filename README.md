@@ -16,8 +16,8 @@ Start your Ethereum node with the desired endpoints (IPC, HTTP and/or WS). For e
 
 ```ruby
 client = Jeth.create
-client = Jeth::IpcClient.create
-client = Jeth::HttpClient.create('http://foo.bar:8545')
+client = Jeth::IpcClient.new
+client = Jeth::HttpClient.new('http://foo.bar:8545')
 
 client.eth_gas_price
  => {"jsonrpc"=>"2.0", "id"=>1, "result"=>"0x4a817c800"} 
